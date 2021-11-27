@@ -9,13 +9,18 @@ import FilmPage from '../pages/film-page/film-page';
 import AddReviewPage from '../pages/add-review/add-review';
 import PlayerPage from '../pages/player-page/player-page';
 import PrivateRoute from '../route-components/private-route/private-route';
+import { Film } from '../../types/film';
 
-function App(): JSX.Element {
+type AppProps = {
+  filmData: Film[];
+}
+
+function App(props: AppProps): JSX.Element {
   return (
     <BrowserRouter>
       <Switch>
         <Route path={AppRoute.Main} exact>
-          <MainPage promotedFilm={promotedFilm}/>
+          <MainPage filmList={props.filmData} promotedFilm={promotedFilm}/>
         </Route>
         <Route path={`${AppRoute.Film}/:id`} exact>
           <FilmPage />

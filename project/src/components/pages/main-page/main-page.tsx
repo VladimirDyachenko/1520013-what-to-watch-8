@@ -1,7 +1,8 @@
-import { filmCardMock } from '../../../mocks/film-card-data';
+import { Film } from '../../../types/film';
 import FilmCard from '../../film-card/film-card';
 
 type MainPageProps = {
+  filmList: Film[]
   promotedFilm: {
     title: string;
     genre: string;
@@ -11,7 +12,7 @@ type MainPageProps = {
   };
 };
 
-function MainPage({promotedFilm}: MainPageProps): JSX.Element {
+function MainPage({filmList, promotedFilm}: MainPageProps): JSX.Element {
   return (
     <>
       <section className="film-card">
@@ -112,9 +113,7 @@ function MainPage({promotedFilm}: MainPageProps): JSX.Element {
           </ul>
 
           <div className="catalog__films-list">
-
-            {filmCardMock.map((film) => <FilmCard key={film.previewImage} previewImage={film.previewImage} title={film.title}/>)}
-
+            {filmList.map((film) => <FilmCard key={film.id} previewImage={film.previewImage} title={film.name}/>)}
           </div>
 
           <div className="catalog__more">
