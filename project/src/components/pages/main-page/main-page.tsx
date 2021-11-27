@@ -1,5 +1,5 @@
 import { Film } from '../../../types/film';
-import FilmCard from '../../film-card/film-card';
+import FilmList from '../../film-list/film-list';
 
 type MainPageProps = {
   filmList: Film[]
@@ -76,9 +76,7 @@ function MainPage({filmList, promotedFilm}: MainPageProps): JSX.Element {
       </section>
 
       <div className="page-content">
-        <section className="catalog">
-          <h2 className="catalog__title visually-hidden">Catalog</h2>
-
+        <FilmList filmList={filmList}>
           <ul className="catalog__genres-list">
             <li className="catalog__genres-item catalog__genres-item--active">
               <a href="#temp" className="catalog__genres-link">All genres</a>
@@ -111,15 +109,7 @@ function MainPage({filmList, promotedFilm}: MainPageProps): JSX.Element {
               <a href="#temp" className="catalog__genres-link">Thrillers</a>
             </li>
           </ul>
-
-          <div className="catalog__films-list">
-            {filmList.map((film) => <FilmCard key={film.id} previewImage={film.previewImage} title={film.name}/>)}
-          </div>
-
-          <div className="catalog__more">
-            <button className="catalog__button" type="button">Show more</button>
-          </div>
-        </section>
+        </FilmList>
 
         <footer className="page-footer">
           <div className="logo">
