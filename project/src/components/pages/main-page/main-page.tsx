@@ -1,4 +1,6 @@
+import { Link } from 'react-router-dom';
 import { Film } from '../../../types/film';
+import { AppRoute } from '../../../utils/const';
 import FilmList from '../../film-list/film-list';
 
 type MainPageProps = {
@@ -24,11 +26,11 @@ function MainPage({filmList, promotedFilm}: MainPageProps): JSX.Element {
 
         <header className="page-header film-card__head">
           <div className="logo">
-            <a className="logo__link" href="#temp">
+            <Link to={AppRoute.Main} className="logo__link">
               <span className="logo__letter logo__letter--1">W</span>
               <span className="logo__letter logo__letter--2">T</span>
               <span className="logo__letter logo__letter--3">W</span>
-            </a>
+            </Link>
           </div>
 
           <ul className="user-block">
@@ -38,7 +40,7 @@ function MainPage({filmList, promotedFilm}: MainPageProps): JSX.Element {
               </div>
             </li>
             <li className="user-block__item">
-              <a className="user-block__link" href="#temp">Sign out</a>
+              <Link to={'#todo'} className="user-block__link">Sign out</Link>
             </li>
           </ul>
         </header>
@@ -79,45 +81,45 @@ function MainPage({filmList, promotedFilm}: MainPageProps): JSX.Element {
         <FilmList filmList={filmList}>
           <ul className="catalog__genres-list">
             <li className="catalog__genres-item catalog__genres-item--active">
-              <a href="#temp" className="catalog__genres-link">All genres</a>
+              <Link to={{search: '?genre=all'}} className="catalog__genres-link">All genres</Link>
             </li>
             <li className="catalog__genres-item">
-              <a href="#temp" className="catalog__genres-link">Comedies</a>
+              <Link to={{search: '?genre=Comedies'}} className="catalog__genres-link">Comedies</Link>
             </li>
             <li className="catalog__genres-item">
-              <a href="#temp" className="catalog__genres-link">Crime</a>
+              <Link to={{search: '?genre=Crime'}} className="catalog__genres-link">Crime</Link>
             </li>
             <li className="catalog__genres-item">
-              <a href="#temp" className="catalog__genres-link">Documentary</a>
+              <Link to={{search: '?genre=Documentary'}} className="catalog__genres-link">Documentary</Link>
             </li>
             <li className="catalog__genres-item">
-              <a href="#temp" className="catalog__genres-link">Dramas</a>
+              <Link to={{search: '?genre=Dramas'}} className="catalog__genres-link">Dramas</Link>
             </li>
             <li className="catalog__genres-item">
-              <a href="#temp" className="catalog__genres-link">Horror</a>
+              <Link to={{search: '?genre=Horror'}} className="catalog__genres-link">Horror</Link>
             </li>
             <li className="catalog__genres-item">
-              <a href="#temp" className="catalog__genres-link">Kids & Family</a>
+              <Link to={{search: '?genre=Kids&Family'}} className="catalog__genres-link">Kids & Family</Link>
             </li>
             <li className="catalog__genres-item">
-              <a href="#temp" className="catalog__genres-link">Romance</a>
+              <Link to={{search: '?genre=Romance'}} className="catalog__genres-link">Romance</Link>
             </li>
             <li className="catalog__genres-item">
-              <a href="#temp" className="catalog__genres-link">Sci-Fi</a>
+              <Link to={{search: '?genre=Sci-Fi'}} className="catalog__genres-link">Sci-Fi</Link>
             </li>
             <li className="catalog__genres-item">
-              <a href="#temp" className="catalog__genres-link">Thrillers</a>
+              <Link to={{search: '?genre=Thrillers'}} className="catalog__genres-link">Thrillers</Link>
             </li>
           </ul>
         </FilmList>
 
         <footer className="page-footer">
           <div className="logo">
-            <a className="logo__link logo__link--light" href="#temp">
+            <Link to={AppRoute.Main} className="logo__link logo__link--light">
               <span className="logo__letter logo__letter--1">W</span>
               <span className="logo__letter logo__letter--2">T</span>
               <span className="logo__letter logo__letter--3">W</span>
-            </a>
+            </Link>
           </div>
 
           <div className="copyright">

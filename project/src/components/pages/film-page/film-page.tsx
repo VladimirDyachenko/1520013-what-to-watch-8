@@ -1,4 +1,6 @@
-/* eslint-disable react/no-unescaped-entities */
+import { Link } from 'react-router-dom';
+import { AppRoute } from '../../../utils/const';
+
 function FilmPage(): JSX.Element {
   return (
     <>
@@ -15,11 +17,11 @@ function FilmPage(): JSX.Element {
 
           <header className="page-header film-card__head">
             <div className="logo">
-              <a href="main.html" className="logo__link">
+              <Link to={AppRoute.Main} className="logo__link">
                 <span className="logo__letter logo__letter--1">W</span>
                 <span className="logo__letter logo__letter--2">T</span>
                 <span className="logo__letter logo__letter--3">W</span>
-              </a>
+              </Link>
             </div>
 
             <ul className="user-block">
@@ -34,7 +36,7 @@ function FilmPage(): JSX.Element {
                 </div>
               </li>
               <li className="user-block__item">
-                <a className="user-block__link" href="#temp">Sign out</a>
+                <Link to={'#TODO'} className="user-block__link">Sign out</Link>
               </li>
             </ul>
           </header>
@@ -66,9 +68,9 @@ function FilmPage(): JSX.Element {
                   </svg>
                   <span>My list</span>
                 </button>
-                <a href="add-review.html" className="btn film-card__button">
+                <Link to={`${AppRoute.Film}/1${AppRoute.AddReview}`} className="btn film-card__button">
                   Add review
-                </a>
+                </Link>
               </div>
             </div>
           </div>
@@ -118,14 +120,14 @@ function FilmPage(): JSX.Element {
                 <p>
                   In the 1930s, the Grand Budapest Hotel is a popular European
                   ski resort, presided over by concierge Gustave H. (Ralph
-                  Fiennes). Zero, a junior lobby boy, becomes Gustave's friend
+                  Fiennes). Zero, a junior lobby boy, becomes Gustave&aposs friend
                   and protege.
                 </p>
 
                 <p>
                   Gustave prides himself on providing first-class service to the
-                  hotel's guests, including satisfying the sexual needs of the
-                  many elderly women who stay there. When one of Gustave's
+                  hotel&aposs guests, including satisfying the sexual needs of the
+                  many elderly women who stay there. When one of Gustave&aposs
                   lovers dies mysteriously, Gustave finds himself the recipient
                   of a priceless painting and the chief suspect in her murder.
                 </p>
@@ -218,11 +220,11 @@ function FilmPage(): JSX.Element {
 
         <footer className="page-footer">
           <div className="logo">
-            <a href="main.html" className="logo__link logo__link--light">
+            <Link to={AppRoute.Main} className="logo__link logo__link--light">
               <span className="logo__letter logo__letter--1">W</span>
               <span className="logo__letter logo__letter--2">T</span>
               <span className="logo__letter logo__letter--3">W</span>
-            </a>
+            </Link>
           </div>
 
           <div className="copyright">
