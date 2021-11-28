@@ -16,6 +16,7 @@ type AppProps = {
 }
 
 function App(props: AppProps): JSX.Element {
+  const randomFilm = props.filmData[Math.floor(Math.random() * props.filmData.length)];
   return (
     <BrowserRouter>
       <Switch>
@@ -26,10 +27,10 @@ function App(props: AppProps): JSX.Element {
           <FilmPage />
         </Route>
         <Route path={`${AppRoute.Film}/:id${AppRoute.AddReview}`} exact>
-          <AddReviewPage />
+          <AddReviewPage film={randomFilm}/>
         </Route>
         <Route path={`${AppRoute.Player}/:id`} exact>
-          <PlayerPage />
+          <PlayerPage film={randomFilm}/>
         </Route>
         <Route path={AppRoute.SignIn} exact>
           <LoginPage />
@@ -37,7 +38,7 @@ function App(props: AppProps): JSX.Element {
         <PrivateRoute
           path={AppRoute.MyList}
           exact
-          render={() => <MyListPage />}
+          render={() => <MyListPage favoriteFilms={props.filmData}/>}
           isAuthorized
         />
         <Route path="" exact>
