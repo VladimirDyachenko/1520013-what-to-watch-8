@@ -20,3 +20,16 @@ export const getFilmsBySelectedGenre = createSelector(
     return films.filter((film) => film.genre.toLowerCase() === genre.toLowerCase());
   },
 );
+
+export const getAvailableGenres = createSelector(
+  getFilmData,
+  (films): Array<string> => {
+    const uniqueGenres: {[key: string]: number} = {};
+
+    for (const film of films) {
+      uniqueGenres[film.genre] !== undefined ? uniqueGenres[film.genre]++ : uniqueGenres[film.genre] = 0;
+    }
+
+    return Object.keys(uniqueGenres);
+  },
+);

@@ -2,9 +2,10 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useLocation } from 'react-router-dom';
 import { setSelectedGenre } from '../../../store/action';
-import { getFilmsBySelectedGenre } from '../../../store/data-process/selector';
+import { getAvailableGenres, getFilmsBySelectedGenre, getSelectedGenre } from '../../../store/data-process/selector';
 import { AppRoute } from '../../../utils/const';
 import FilmList from '../../film-list/film-list';
+import GenreFilter from '../../genre-filter/genre-filter';
 
 type MainPageProps = {
   promotedFilm: {
@@ -17,9 +18,11 @@ type MainPageProps = {
 };
 
 function MainPage({promotedFilm}: MainPageProps): JSX.Element {
-  const filmList = useSelector(getFilmsBySelectedGenre);
   const dispatch = useDispatch();
   const location = useLocation();
+  const filmList = useSelector(getFilmsBySelectedGenre);
+  const availableGenres = useSelector(getAvailableGenres);
+  const selectedGenre = useSelector(getSelectedGenre);
 
   useEffect(() => {
     const genre = new URLSearchParams(location.search).get('genre');
@@ -100,38 +103,7 @@ function MainPage({promotedFilm}: MainPageProps): JSX.Element {
             </div>
           }
         >
-          <ul className="catalog__genres-list">
-            <li className="catalog__genres-item catalog__genres-item--active">
-              <Link to={{search: ''}} className="catalog__genres-link">All genres</Link>
-            </li>
-            <li className="catalog__genres-item">
-              <Link to={{search: '?genre=Comedies'}} className="catalog__genres-link">Comedies</Link>
-            </li>
-            <li className="catalog__genres-item">
-              <Link to={{search: '?genre=Crime'}} className="catalog__genres-link">Crime</Link>
-            </li>
-            <li className="catalog__genres-item">
-              <Link to={{search: '?genre=Documentary'}} className="catalog__genres-link">Documentary</Link>
-            </li>
-            <li className="catalog__genres-item">
-              <Link to={{search: '?genre=Drama'}} className="catalog__genres-link">Drama</Link>
-            </li>
-            <li className="catalog__genres-item">
-              <Link to={{search: '?genre=Horror'}} className="catalog__genres-link">Horror</Link>
-            </li>
-            <li className="catalog__genres-item">
-              <Link to={{search: '?genre=Kids&Family'}} className="catalog__genres-link">Kids & Family</Link>
-            </li>
-            <li className="catalog__genres-item">
-              <Link to={{search: '?genre=Romance'}} className="catalog__genres-link">Romance</Link>
-            </li>
-            <li className="catalog__genres-item">
-              <Link to={{search: '?genre=Sci-Fi'}} className="catalog__genres-link">Sci-Fi</Link>
-            </li>
-            <li className="catalog__genres-item">
-              <Link to={{search: '?genre=Thrillers'}} className="catalog__genres-link">Thrillers</Link>
-            </li>
-          </ul>
+          <GenreFilter genres={availableGenres} selectedGenre={selectedGenre}/>
         </FilmList>
 
         <footer className="page-footer">
