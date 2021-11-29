@@ -4,15 +4,18 @@ import FilmCard from '../film-card/film-card';
 
 type FilmListProps = PropsWithChildren<{
   filmList: Film[];
+  footer?: JSX.Element;
+  header?: JSX.Element;
+  className?: string;
 }>
 
-function FilmList({filmList, children}: FilmListProps): JSX.Element {
+function FilmList({filmList, children, header, footer, className}: FilmListProps): JSX.Element {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [activeFilm, setActiveFilm] = useState<Film | undefined>(undefined);
 
   return (
-    <section className="catalog">
-      <h2 className="catalog__title visually-hidden">Catalog</h2>
+    <section className={`catalog ${className ? className : ''}`}>
+      {header}
 
       {children}
 
@@ -20,9 +23,7 @@ function FilmList({filmList, children}: FilmListProps): JSX.Element {
         {filmList.map((film) => <FilmCard key={film.id} film={film} onSetActiveFilm={setActiveFilm}/>)}
       </div>
 
-      <div className="catalog__more">
-        <button className="catalog__button" type="button">Show more</button>
-      </div>
+      {footer}
     </section>
   );
 }

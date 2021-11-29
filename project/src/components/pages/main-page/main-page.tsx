@@ -78,7 +78,16 @@ function MainPage({filmList, promotedFilm}: MainPageProps): JSX.Element {
       </section>
 
       <div className="page-content">
-        <FilmList filmList={filmList}>
+        <FilmList filmList={filmList}
+          header={
+            <h2 className="catalog__title visually-hidden">Catalog</h2>
+          }
+          footer={
+            <div className="catalog__more">
+              <button className="catalog__button" type="button">Show more</button>
+            </div>
+          }
+        >
           <ul className="catalog__genres-list">
             <li className="catalog__genres-item catalog__genres-item--active">
               <Link to={{search: '?genre=all'}} className="catalog__genres-link">All genres</Link>
