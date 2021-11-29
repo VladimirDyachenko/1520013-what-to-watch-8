@@ -9,19 +9,19 @@ import FilmPage from '../pages/film-page/film-page';
 import AddReviewPage from '../pages/add-review/add-review';
 import PlayerPage from '../pages/player-page/player-page';
 import PrivateRoute from '../route-components/private-route/private-route';
-import { Film } from '../../types/film';
+import { useSelector } from 'react-redux';
+import { getFilmData } from '../../store/data-process/selector';
 
-type AppProps = {
-  filmData: Film[];
-}
 
-function App(props: AppProps): JSX.Element {
-  const randomFilm = props.filmData[Math.floor(Math.random() * props.filmData.length)];
+function App(): JSX.Element {
+  const filmData = useSelector(getFilmData);
+  const randomFilm = filmData[Math.floor(Math.random() * filmData.length)];
+
   return (
     <BrowserRouter>
       <Switch>
         <Route path={AppRoute.Main} exact>
-          <MainPage filmList={props.filmData} promotedFilm={promotedFilm}/>
+          <MainPage promotedFilm={promotedFilm}/>
         </Route>
         <Route path={`${AppRoute.Film}/:id`} exact>
           <FilmPage film={randomFilm}/>
@@ -38,8 +38,7 @@ function App(props: AppProps): JSX.Element {
         <PrivateRoute
           path={AppRoute.MyList}
           exact
-          render={() => <MyListPage favoriteFilms={props.filmData}/>}
-          isAuthorized
+          render={() => <MyListPage />}
         />
         <Route path="" exact>
           <Page404/>;

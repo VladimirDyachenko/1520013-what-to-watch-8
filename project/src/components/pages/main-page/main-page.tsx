@@ -1,10 +1,12 @@
-import { Link } from 'react-router-dom';
-import { Film } from '../../../types/film';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link, useLocation } from 'react-router-dom';
+import { setSelectedGenre } from '../../../store/action';
+import { getFilmsBySelectedGenre } from '../../../store/data-process/selector';
 import { AppRoute } from '../../../utils/const';
 import FilmList from '../../film-list/film-list';
 
 type MainPageProps = {
-  filmList: Film[]
   promotedFilm: {
     title: string;
     genre: string;
@@ -14,7 +16,17 @@ type MainPageProps = {
   };
 };
 
-function MainPage({filmList, promotedFilm}: MainPageProps): JSX.Element {
+function MainPage({promotedFilm}: MainPageProps): JSX.Element {
+  const filmList = useSelector(getFilmsBySelectedGenre);
+  const dispatch = useDispatch();
+  const location = useLocation();
+
+  useEffect(() => {
+    const genre = new URLSearchParams(location.search).get('genre');
+    dispatch(setSelectedGenre(genre || undefined));
+
+  }, [location.search, dispatch]);
+
   return (
     <>
       <section className="film-card">
@@ -90,7 +102,7 @@ function MainPage({filmList, promotedFilm}: MainPageProps): JSX.Element {
         >
           <ul className="catalog__genres-list">
             <li className="catalog__genres-item catalog__genres-item--active">
-              <Link to={{search: '?genre=all'}} className="catalog__genres-link">All genres</Link>
+              <Link to={{search: ''}} className="catalog__genres-link">All genres</Link>
             </li>
             <li className="catalog__genres-item">
               <Link to={{search: '?genre=Comedies'}} className="catalog__genres-link">Comedies</Link>
@@ -102,7 +114,7 @@ function MainPage({filmList, promotedFilm}: MainPageProps): JSX.Element {
               <Link to={{search: '?genre=Documentary'}} className="catalog__genres-link">Documentary</Link>
             </li>
             <li className="catalog__genres-item">
-              <Link to={{search: '?genre=Dramas'}} className="catalog__genres-link">Dramas</Link>
+              <Link to={{search: '?genre=Drama'}} className="catalog__genres-link">Drama</Link>
             </li>
             <li className="catalog__genres-item">
               <Link to={{search: '?genre=Horror'}} className="catalog__genres-link">Horror</Link>

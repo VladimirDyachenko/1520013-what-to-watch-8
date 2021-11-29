@@ -1,13 +1,12 @@
+import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { Film } from '../../../types/film';
+import { getFavoriteFilms } from '../../../store/data-process/selector';
 import { AppRoute } from '../../../utils/const';
 import FilmList from '../../film-list/film-list';
 
-type MyListPageProps = {
-  favoriteFilms: Film[];
-}
+function MyListPage(): JSX.Element {
+  const favoriteFilms = useSelector(getFavoriteFilms);
 
-function MyListPage({favoriteFilms}: MyListPageProps): JSX.Element {
   return (
     <div className="user-page">
       <header className="page-header user-page__head">
