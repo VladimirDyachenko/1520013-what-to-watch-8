@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useLocation } from 'react-router-dom';
 import { setSelectedGenre } from '../../../store/action';
@@ -23,12 +23,20 @@ function MainPage({promotedFilm}: MainPageProps): JSX.Element {
   const filmList = useSelector(getFilmsBySelectedGenre);
   const availableGenres = useSelector(getAvailableGenres);
   const selectedGenre = useSelector(getSelectedGenre);
+  const [cardsToShowCount, setCardsToShowCount] = useState(8);
+  const [canLoadMore, setCanLoadMore] = useState(true);
+
+  const slicedFilmList = useMemo(() => filmList.slice(0, Math.min(cardsToShowCount, filmList.length)), [filmList, cardsToShowCount]);
 
   useEffect(() => {
     const genre = new URLSearchParams(location.search).get('genre');
     dispatch(setSelectedGenre(genre || undefined));
-
+    setCardsToShowCount(8);
   }, [location.search, dispatch]);
+
+  useEffect(() => cardsToShowCount >= filmList.length ? setCanLoadMore(false) : setCanLoadMore(true), [filmList, cardsToShowCount]);
+
+  const handleShowMoreClick = useCallback(() => setCardsToShowCount((count) => count + 4), [setCardsToShowCount]);
 
   return (
     <>
@@ -93,14 +101,15 @@ function MainPage({promotedFilm}: MainPageProps): JSX.Element {
       </section>
 
       <div className="page-content">
-        <FilmList filmList={filmList}
+        <FilmList filmList={slicedFilmList}
           header={
             <h2 className="catalog__title visually-hidden">Catalog</h2>
           }
           footer={
-            <div className="catalog__more">
-              <button className="catalog__button" type="button">Show more</button>
-            </div>
+            canLoadMore ?
+              <div className="catalog__more">
+                <button className="catalog__button" type="button" onClick={handleShowMoreClick}>Show more</button>
+              </div> : undefined
           }
         >
           <GenreFilter genres={availableGenres} selectedGenre={selectedGenre}/>
