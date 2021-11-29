@@ -24,7 +24,7 @@ function App(props: AppProps): JSX.Element {
           <MainPage filmList={props.filmData} promotedFilm={promotedFilm}/>
         </Route>
         <Route path={`${AppRoute.Film}/:id`} exact>
-          <FilmPage />
+          <FilmPage film={randomFilm}/>
         </Route>
         <Route path={`${AppRoute.Film}/:id${AppRoute.AddReview}`} exact>
           <AddReviewPage film={randomFilm}/>

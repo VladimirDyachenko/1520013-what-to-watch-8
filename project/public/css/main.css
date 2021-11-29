@@ -967,12 +967,22 @@ main {
 .film-nav__item {
   margin-right: 35px;
 }
-.film-nav__item--active .film-nav__link {
+.film-nav__link--active {
   font-weight: bold;
 }
-.film-nav__item--active .film-nav__link::after {
+
+.film-nav__link--active::after {
+  content: "";
   display: block;
+  position: absolute;
+  z-index: 1;
+  left: 0;
+  right: 0;
+  height: 4px;
+  bottom: 0;
+  background: #eee5b5;
 }
+
 .film-nav__item:last-child {
   margin-right: 0;
 }
@@ -984,17 +994,7 @@ main {
   position: relative;
   padding-bottom: 19px;
 }
-.film-nav__link::after {
-  content: "";
-  position: absolute;
-  z-index: 1;
-  left: 0;
-  right: 0;
-  height: 4px;
-  bottom: 0;
-  background: #eee5b5;
-  display: none;
-}
+
 .film-nav__link:hover::after {
   display: block;
 }
