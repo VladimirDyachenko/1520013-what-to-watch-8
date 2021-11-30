@@ -3,18 +3,29 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import App from './components/app/app';
-import { fakeFilms as filmData } from './mocks/films';
-import { setAuthorizationStatus, setFavoriteFilms, setFilmData } from './store/action';
+import { fakeFilms } from './mocks/films';
+import { createAPI } from './services/api';
+import { setAuthorizationStatus, setFavoriteFilms } from './store/action';
+import { fetchFilms } from './store/api-action';
 import { rootReducer } from './store/root-reducer';
 import { AuthorizationStatus } from './utils/const';
 
+const api = createAPI(
+  () => store.dispatch(setAuthorizationStatus(AuthorizationStatus.NotAuthorized)),
+);
+
 const store = configureStore({
   reducer: rootReducer,
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware({
+    thunk: {
+      extraArgument: api,
+    },
+  }),
 });
 
 store.dispatch(setAuthorizationStatus(AuthorizationStatus.Authorized));
-store.dispatch(setFilmData([...filmData]));
-store.dispatch(setFavoriteFilms(filmData.filter((_, index) => index % 2 === 0)));
+store.dispatch(fetchFilms());
+store.dispatch(setFavoriteFilms(fakeFilms.filter((_, index) => index % 2 === 0)));
 
 ReactDOM.render(
   <React.StrictMode>

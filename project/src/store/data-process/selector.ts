@@ -33,3 +33,5 @@ export const getAvailableGenres = createSelector(
     return Object.keys(uniqueGenres);
   },
 );
+
+export const getIsDataLoaded = (state: Store): boolean => state[NameSpace.Data].isDataLoaded;

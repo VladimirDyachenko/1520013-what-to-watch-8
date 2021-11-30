@@ -32,3 +32,8 @@ export const setFavoriteFilms = createAction(
   ActionType.SetFavoriteFilms,
   (films: Film[]) => ({payload: films}),
 );
+
+export const setIsDataLoaded = createAction(
+  ActionType.SetDataLoaded,
+  (flag: boolean) => ({payload: flag}),
+);
