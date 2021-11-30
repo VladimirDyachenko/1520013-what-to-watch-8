@@ -5,4 +5,5 @@ export type DataProcess = {
   selectedGenre: string | undefined;
   favoriteFilms: Film[];
   isDataLoaded: boolean;
+  promotedFilm: Film | undefined;
 };

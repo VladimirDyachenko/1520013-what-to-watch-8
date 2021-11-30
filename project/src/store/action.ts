@@ -37,3 +37,8 @@ export const setIsDataLoaded = createAction(
   ActionType.SetDataLoaded,
   (flag: boolean) => ({payload: flag}),
 );
+
+export const setPromotedFilm = createAction(
+  ActionType.SetPromotedFilm,
+  (film: Film) => ({payload: film}),
+);

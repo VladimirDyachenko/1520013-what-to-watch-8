@@ -1,12 +1,13 @@
 import { createReducer } from '@reduxjs/toolkit';
 import { DataProcess } from '../../types/store/data-process';
-import { setFavoriteFilms, setFilmData, setIsDataLoaded, setSelectedGenre } from '../action';
+import { setFavoriteFilms, setFilmData, setIsDataLoaded, setPromotedFilm, setSelectedGenre } from '../action';
 
 const initialState: DataProcess = {
   films: [],
   selectedGenre: undefined,
   favoriteFilms: [],
   isDataLoaded: false,
+  promotedFilm: undefined,
 };
 
 const dataProcess = createReducer(initialState, (builder) => {
@@ -19,6 +20,9 @@ const dataProcess = createReducer(initialState, (builder) => {
     })
     .addCase(setFavoriteFilms, (state, action) => {
       state.favoriteFilms = action.payload;
+    })
+    .addCase(setPromotedFilm, (state, action) => {
+      state.promotedFilm = action.payload;
     })
     .addCase(setIsDataLoaded, (state, action) => {
       state.isDataLoaded = action.payload;
