@@ -9,6 +9,8 @@ export const getSelectedGenre = (state: Store): string | undefined => state[Name
 
 export const getFavoriteFilms = (state: Store): Film[] => state[NameSpace.Data].favoriteFilms;
 
+export const getPromotedFilm = (state: Store): Film | undefined => state[NameSpace.Data].promotedFilm;
+
 export const getFilmsBySelectedGenre = createSelector(
   getFilmData,
   getSelectedGenre,

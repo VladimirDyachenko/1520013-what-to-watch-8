@@ -2,26 +2,17 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import { setSelectedGenre } from '../../../store/action';
-import { getAvailableGenres, getFilmsBySelectedGenre, getSelectedGenre } from '../../../store/data-process/selector';
+import { getAvailableGenres, getFilmsBySelectedGenre, getPromotedFilm, getSelectedGenre } from '../../../store/data-process/selector';
 import FilmList from '../../film-list/film-list';
 import Footer from '../../footer/footer';
 import GenreFilter from '../../genre-filter/genre-filter';
 import Header from '../../header/header';
 
-type MainPageProps = {
-  promotedFilm: {
-    title: string;
-    genre: string;
-    releaseDate: string;
-    poster: string;
-    bgImage: string;
-  };
-};
-
-function MainPage({promotedFilm}: MainPageProps): JSX.Element {
+function MainPage(): JSX.Element {
   const dispatch = useDispatch();
   const location = useLocation();
   const filmList = useSelector(getFilmsBySelectedGenre);
+  const promotedFilm = useSelector(getPromotedFilm);
   const availableGenres = useSelector(getAvailableGenres);
   const selectedGenre = useSelector(getSelectedGenre);
   const [cardsToShowCount, setCardsToShowCount] = useState(8);
@@ -43,7 +34,7 @@ function MainPage({promotedFilm}: MainPageProps): JSX.Element {
     <>
       <section className="film-card">
         <div className="film-card__bg">
-          <img src={promotedFilm.bgImage} alt={promotedFilm.title} />
+          <img src={promotedFilm?.backgroundImage} alt={promotedFilm?.name} />
         </div>
 
         <h1 className="visually-hidden">WTW</h1>
@@ -53,14 +44,14 @@ function MainPage({promotedFilm}: MainPageProps): JSX.Element {
         <div className="film-card__wrap">
           <div className="film-card__info">
             <div className="film-card__poster">
-              <img src={promotedFilm.poster} alt={promotedFilm.title} width="218" height="327" />
+              <img src={promotedFilm?.posterImage} alt={promotedFilm?.name} width="218" height="327" />
             </div>
 
             <div className="film-card__desc">
-              <h2 className="film-card__title">{promotedFilm.title}</h2>
+              <h2 className="film-card__title">{promotedFilm?.name}</h2>
               <p className="film-card__meta">
-                <span className="film-card__genre">{promotedFilm.genre}</span>
-                <span className="film-card__year">{promotedFilm.releaseDate}</span>
+                <span className="film-card__genre">{promotedFilm?.genre}</span>
+                <span className="film-card__year">{promotedFilm?.released}</span>
               </p>
 
               <div className="film-card__buttons">

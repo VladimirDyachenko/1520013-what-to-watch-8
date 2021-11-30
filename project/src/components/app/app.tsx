@@ -1,4 +1,3 @@
-import { promotedFilm } from '../../mocks/promoted-film';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { AppRoute } from '../../utils/const';
 import Page404 from '../pages/404/404';
@@ -31,7 +30,7 @@ function App(): JSX.Element {
     <BrowserRouter>
       <Switch>
         <Route path={AppRoute.Main} exact>
-          <MainPage promotedFilm={promotedFilm}/>
+          <MainPage />
         </Route>
         <Route path={`${AppRoute.Film}/:id`} exact>
           <FilmPage film={randomFilm}/>
