@@ -1,10 +1,10 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { setSelectedGenre } from '../../../store/action';
 import { getAvailableGenres, getFilmsBySelectedGenre, getSelectedGenre } from '../../../store/data-process/selector';
-import { AppRoute } from '../../../utils/const';
 import FilmList from '../../film-list/film-list';
+import Footer from '../../footer/footer';
 import GenreFilter from '../../genre-filter/genre-filter';
 import Header from '../../header/header';
 
@@ -97,19 +97,7 @@ function MainPage({promotedFilm}: MainPageProps): JSX.Element {
           <GenreFilter genres={availableGenres} selectedGenre={selectedGenre}/>
         </FilmList>
 
-        <footer className="page-footer">
-          <div className="logo">
-            <Link to={AppRoute.Main} className="logo__link logo__link--light">
-              <span className="logo__letter logo__letter--1">W</span>
-              <span className="logo__letter logo__letter--2">T</span>
-              <span className="logo__letter logo__letter--3">W</span>
-            </Link>
-          </div>
-
-          <div className="copyright">
-            <p>© 2019 What to watch Ltd.</p>
-          </div>
-        </footer>
+        <Footer/>
       </div>
     </>
   );

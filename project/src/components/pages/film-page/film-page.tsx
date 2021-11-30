@@ -4,6 +4,7 @@ import { Film } from '../../../types/film';
 import { AppRoute } from '../../../utils/const';
 import FilmDetailTabs from '../../film-detail-tabs/film-detail-tabs';
 import FilmList from '../../film-list/film-list';
+import Footer from '../../footer/footer';
 import Header from '../../header/header';
 
 type FilmPageProps = {
@@ -84,19 +85,7 @@ function FilmPage({ film }: FilmPageProps): JSX.Element {
           className='catalog--like-this'
         />
 
-        <footer className="page-footer">
-          <div className="logo">
-            <Link to={AppRoute.Main} className="logo__link logo__link--light">
-              <span className="logo__letter logo__letter--1">W</span>
-              <span className="logo__letter logo__letter--2">T</span>
-              <span className="logo__letter logo__letter--3">W</span>
-            </Link>
-          </div>
-
-          <div className="copyright">
-            <p>© 2019 What to watch Ltd.</p>
-          </div>
-        </footer>
+        <Footer/>
       </div>
     </>
   );
