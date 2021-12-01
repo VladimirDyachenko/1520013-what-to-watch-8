@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { getToken, setToken } from '../services/token';
+import { dropToken, getToken, setToken } from '../services/token';
 import { Film } from '../types/film';
 import { ThunkActionResult } from '../types/store/action';
 import { AuthInfo } from '../types/user';
@@ -60,5 +60,18 @@ export const loginAction = (login: string, password: string, onServerResponse: (
         dispatch(setAuthorizationStatus(AuthorizationStatus.NotAuthorized));
         onServerResponse('error');
       }
+    }
+  };
+
+export const logOutAction = (): ThunkActionResult =>
+  async (dispatch, _getState, api): Promise<void> => {
+    try {
+      await api.delete<AuthInfo>(ApiRoute.Logout);
+      dispatch(setUserData(undefined));
+      dispatch(setAuthorizationStatus(AuthorizationStatus.NotAuthorized));
+      dropToken();
+    } catch (error: unknown) {
+      // eslint-disable-next-line no-console
+      console.error(error);
     }
   };
