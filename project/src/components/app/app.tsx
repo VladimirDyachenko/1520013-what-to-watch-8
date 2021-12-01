@@ -34,9 +34,6 @@ function App(): JSX.Element {
       <Route path={`${AppRoute.Film}/:id`} exact>
         <FilmPage />
       </Route>
-      <Route path={`${AppRoute.Film}/:id${AppRoute.AddReview}`} exact>
-        <AddReviewPage />
-      </Route>
       <Route path={`${AppRoute.Player}/:id`} exact>
         <PlayerPage film={randomFilm}/>
       </Route>
@@ -47,6 +44,11 @@ function App(): JSX.Element {
         path={AppRoute.MyList}
         exact
         render={() => <MyListPage />}
+      />
+      <PrivateRoute
+        path={`${AppRoute.Film}/:id${AppRoute.AddReview}`}
+        exact
+        render={() => <AddReviewPage />}
       />
       <Route path="" exact>
         <Page404/>;
