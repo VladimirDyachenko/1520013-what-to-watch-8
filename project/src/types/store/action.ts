@@ -11,6 +11,7 @@ export enum ActionType {
   SetFavoriteFilms = 'data/SetFavoriteFilms',
   SetDataLoaded = 'data/SetDataLoaded',
   SetPromotedFilm = 'data/SetPromotedFilm',
+  SetFilmDetails = 'data/SetFilmDetails',
 }
 
 export type ThunkActionResult<R = Promise<void>> = ThunkAction<R, Store, AxiosInstance, Action>;

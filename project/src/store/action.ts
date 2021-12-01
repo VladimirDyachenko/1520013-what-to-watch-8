@@ -42,3 +42,8 @@ export const setPromotedFilm = createAction(
   ActionType.SetPromotedFilm,
   (film: Film) => ({payload: film}),
 );
+
+export const setFilmDetails = createAction(
+  ActionType.SetFilmDetails,
+  (film: Film) => ({payload: film}),
+);

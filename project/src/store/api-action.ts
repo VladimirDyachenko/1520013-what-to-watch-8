@@ -5,7 +5,7 @@ import { ThunkActionResult } from '../types/store/action';
 import { AuthInfo } from '../types/user';
 import { ApiRoute, AuthorizationStatus } from '../utils/const';
 import { keysToCamel } from '../utils/snake-to-camel-adapter';
-import { setAuthorizationStatus, setFilmData, setIsDataLoaded, setPromotedFilm, setUserData } from './action';
+import { setAuthorizationStatus, setFilmData, setFilmDetails, setIsDataLoaded, setPromotedFilm, setUserData } from './action';
 
 export const fetchFilms = (): ThunkActionResult =>
   async (dispatch, _getState, api): Promise<void> => {
@@ -70,6 +70,18 @@ export const logOutAction = (): ThunkActionResult =>
       dispatch(setUserData(undefined));
       dispatch(setAuthorizationStatus(AuthorizationStatus.NotAuthorized));
       dropToken();
+    } catch (error: unknown) {
+      // eslint-disable-next-line no-console
+      console.error(error);
+    }
+  };
+
+export const fetchFilmDetails = (id: string): ThunkActionResult =>
+  async (dispatch, _getState, api): Promise<void> => {
+    try {
+      const { data } = await api.get(`${ApiRoute.Films}/${id}`);
+      const adaptedData = keysToCamel(data) as Film;
+      dispatch(setFilmDetails(adaptedData));
     } catch (error: unknown) {
       // eslint-disable-next-line no-console
       console.error(error);

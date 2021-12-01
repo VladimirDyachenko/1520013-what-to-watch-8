@@ -6,4 +6,5 @@ export type DataProcess = {
   favoriteFilms: Film[];
   isDataLoaded: boolean;
   promotedFilm: Film | undefined;
+  filmDetails: Film | undefined;
 };
