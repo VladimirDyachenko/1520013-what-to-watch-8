@@ -1,8 +1,22 @@
-import { ChangeEvent, FormEvent, useState } from 'react';
+import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { useParams } from 'react-router';
+import { redirectToRoute } from '../../store/action';
+import { addReviewAction } from '../../store/api-action';
+import { CommentPost } from '../../types/comment';
+import { AppRoute } from '../../utils/const';
+
+type RouteParams = {
+  id: string;
+}
 
 function AddReviewForm(): JSX.Element {
+  const dispatch = useDispatch();
+  const params = useParams<RouteParams>();
   const [rating, setRating] = useState<undefined | string>(undefined);
   const [comment, setComment] = useState<undefined | string>(undefined);
+  const [isFormDisabled, setIsFormDisabled] = useState(false);
+  const [isFormInvalid, setIsFormInvalid] = useState(false);
 
   const handleRadioChange = (event: ChangeEvent<HTMLInputElement>) => {
     setRating(event.target.value);
@@ -12,14 +26,38 @@ function AddReviewForm(): JSX.Element {
     setComment(event.target.value);
   };
 
+  useEffect(() => {
+    if (rating === undefined || comment === undefined || comment.length < 50 || comment?.length > 400) {
+      setIsFormInvalid(true);
+    } else {
+      setIsFormInvalid(false);
+    }
+
+  }, [rating, comment]);
+
   const handleFormSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+
+    if (comment === undefined || rating === undefined) {
+      return;
+    }
+
+    setIsFormDisabled(true);
+
+    const commentPost: CommentPost = {
+      comment: comment,
+      rating: Number(rating),
+    };
+    const onSuccess = () => (dispatch(redirectToRoute(`${AppRoute.Film}/${params.id}#reviews`)));
+    const onError = () => setIsFormDisabled(false);
+
+    dispatch(addReviewAction(params.id, commentPost, onSuccess, onError));
   };
 
   return (
     <div className="add-review">
       <form action="#" className="add-review__form" onSubmit={handleFormSubmit}>
-        <fieldset style={{border: '0', padding: '0', margin: '0'}}>
+        <fieldset style={{border: '0', padding: '0', margin: '0'}} disabled={isFormDisabled}>
           <div className="rating">
             <div className="rating__stars">
               <input onChange={handleRadioChange} className="rating__input" id="star-10" type="radio" name="rating" value="10" checked={rating === '10'} />
@@ -65,7 +103,7 @@ function AddReviewForm(): JSX.Element {
             >
             </textarea>
             <div className="add-review__submit">
-              <button className="add-review__btn" type="submit">Post</button>
+              <button className="add-review__btn" type="submit" disabled={isFormInvalid}>Post</button>
             </div>
 
           </div>

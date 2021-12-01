@@ -69,7 +69,7 @@ export const getFilmCommentsSplitted = createSelector(
       left: [],
       right: [],
     };
-    commentForFilm.comments.forEach((comment, index) => index % 2 === 0 ? result.left.push(comment) : result.right.push(comment));
+    commentForFilm.comments.forEach((comment, index) => index % 2 === 0 ? result.left.unshift(comment) : result.right.unshift(comment));
 
     return result;
   },
