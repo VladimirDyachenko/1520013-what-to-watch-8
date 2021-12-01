@@ -47,3 +47,8 @@ export const setFilmDetails = createAction(
   ActionType.SetFilmDetails,
   (film: Film) => ({payload: film}),
 );
+
+export const redirectToRoute = createAction(
+  ActionType.RedirectToRoute,
+  (route: string) => ({payload: route}),
+);

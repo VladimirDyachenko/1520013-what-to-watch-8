@@ -12,6 +12,7 @@ export enum ActionType {
   SetDataLoaded = 'data/SetDataLoaded',
   SetPromotedFilm = 'data/SetPromotedFilm',
   SetFilmDetails = 'data/SetFilmDetails',
+  RedirectToRoute = 'navigation/RedirectToRoute',
 }
 
 export type ThunkActionResult<R = Promise<void>> = ThunkAction<R, Store, AxiosInstance, Action>;

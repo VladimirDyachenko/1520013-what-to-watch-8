@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 import { AppRoute } from '../../utils/const';
 import Page404 from '../pages/404/404';
 import MainPage from '../pages/main-page/main-page';
@@ -27,33 +27,31 @@ function App(): JSX.Element {
   }
 
   return (
-    <BrowserRouter>
-      <Switch>
-        <Route path={AppRoute.Main} exact>
-          <MainPage />
-        </Route>
-        <Route path={`${AppRoute.Film}/:id`} exact>
-          <FilmPage film={randomFilm}/>
-        </Route>
-        <Route path={`${AppRoute.Film}/:id${AppRoute.AddReview}`} exact>
-          <AddReviewPage film={randomFilm}/>
-        </Route>
-        <Route path={`${AppRoute.Player}/:id`} exact>
-          <PlayerPage film={randomFilm}/>
-        </Route>
-        <Route path={AppRoute.SignIn} exact>
-          <LoginPage />
-        </Route>
-        <PrivateRoute
-          path={AppRoute.MyList}
-          exact
-          render={() => <MyListPage />}
-        />
-        <Route path="" exact>
-          <Page404/>;
-        </Route>
-      </Switch>
-    </BrowserRouter>
+    <Switch>
+      <Route path={AppRoute.Main} exact>
+        <MainPage />
+      </Route>
+      <Route path={`${AppRoute.Film}/:id`} exact>
+        <FilmPage film={randomFilm}/>
+      </Route>
+      <Route path={`${AppRoute.Film}/:id${AppRoute.AddReview}`} exact>
+        <AddReviewPage film={randomFilm}/>
+      </Route>
+      <Route path={`${AppRoute.Player}/:id`} exact>
+        <PlayerPage film={randomFilm}/>
+      </Route>
+      <Route path={AppRoute.SignIn} exact>
+        <LoginPage />
+      </Route>
+      <PrivateRoute
+        path={AppRoute.MyList}
+        exact
+        render={() => <MyListPage />}
+      />
+      <Route path="" exact>
+        <Page404/>;
+      </Route>
+    </Switch>
   );
 }
 
