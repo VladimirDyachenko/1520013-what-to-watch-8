@@ -37,3 +37,19 @@ export const getAvailableGenres = createSelector(
 );
 
 export const getIsDataLoaded = (state: Store): boolean => state[NameSpace.Data].isDataLoaded;
+
+export const getFilmDetails = (state: Store): Film | undefined => state[NameSpace.Data].filmDetails;
+
+export const getSimilarFilms = (state: Store): Film[] | undefined => state[NameSpace.Data].similarFilms;
+
+export const getSimilarFilmsWithLimit = createSelector(
+  getSimilarFilms,
+  (_, limit = 4) =>  limit,
+  (films, limit) => {
+    if (films === undefined) {
+      return undefined;
+    }
+
+    return films.slice(0, limit);
+  },
+);

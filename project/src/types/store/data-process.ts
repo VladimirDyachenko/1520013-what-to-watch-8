@@ -7,4 +7,5 @@ export type DataProcess = {
   isDataLoaded: boolean;
   promotedFilm: Film | undefined;
   filmDetails: Film | undefined;
+  similarFilms: Film[] | undefined;
 };

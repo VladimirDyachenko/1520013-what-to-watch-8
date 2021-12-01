@@ -32,10 +32,10 @@ function App(): JSX.Element {
         <MainPage />
       </Route>
       <Route path={`${AppRoute.Film}/:id`} exact>
-        <FilmPage film={randomFilm}/>
+        <FilmPage />
       </Route>
       <Route path={`${AppRoute.Film}/:id${AppRoute.AddReview}`} exact>
-        <AddReviewPage film={randomFilm}/>
+        <AddReviewPage />
       </Route>
       <Route path={`${AppRoute.Player}/:id`} exact>
         <PlayerPage film={randomFilm}/>

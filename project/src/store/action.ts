@@ -52,3 +52,8 @@ export const redirectToRoute = createAction(
   ActionType.RedirectToRoute,
   (route: string) => ({payload: route}),
 );
+
+export const setSimilarFilms = createAction(
+  ActionType.SetSimilarFilms,
+  (films: Film[]) => ({payload: films}),
+);

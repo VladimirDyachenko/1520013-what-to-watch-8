@@ -1,14 +1,36 @@
-import { Link } from 'react-router-dom';
-import { Film } from '../../../types/film';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link, useParams } from 'react-router-dom';
+import { fetchFilmDetails } from '../../../store/api-action';
+import { getFilmDetails } from '../../../store/data-process/selector';
 import { AppRoute } from '../../../utils/const';
 import AddReviewForm from '../../add-review-form/add-review-form';
 import Header from '../../header/header';
+import Loader from '../../loader/loader';
 
-type AddReviewPageProps = {
-  film: Film;
-}
+type RouteParams = {
+  id: string;
+};
 
-function AddReviewPage({film}: AddReviewPageProps): JSX.Element {
+function AddReviewPage(): JSX.Element {
+  const params = useParams<RouteParams>();
+  const film = useSelector(getFilmDetails);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (film === undefined || film?.id.toString() !== params.id) {
+      dispatch(fetchFilmDetails(params.id));
+    }
+  }, [dispatch, film, params.id]);
+
+  if (film?.id.toString() !== params.id) {
+    return (
+      <div style={{minHeight: '100vh', display: 'flex'}}>
+        <Loader/>
+      </div>
+    );
+  }
+
   return (
     <section className="film-card film-card--full" style={{background: film.backgroundColor}}>
       <div className="film-card__header">

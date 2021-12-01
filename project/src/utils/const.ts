@@ -4,7 +4,8 @@ export enum AppRoute {
   MyList = '/mylist',
   Film = '/films',
   AddReview = '/review',
-  Player = '/player'
+  Player = '/player',
+  NotFound = '/404',
 }
 
 export enum AuthorizationStatus {
@@ -19,6 +20,7 @@ export const REQUEST_TIMEOUT = 5000;
 
 export enum HttpCode {
   Unauthorized = 403,
+  NotFound = 404,
 }
 
 export enum ApiRoute {

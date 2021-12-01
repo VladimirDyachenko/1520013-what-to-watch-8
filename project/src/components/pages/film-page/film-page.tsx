@@ -1,17 +1,42 @@
-import { Link } from 'react-router-dom';
-import { fakeFilms } from '../../../mocks/films';
-import { Film } from '../../../types/film';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link, useParams } from 'react-router-dom';
+import { fetchFilmDetails, fetchSimilarFilms } from '../../../store/api-action';
+import { getFilmDetails, getSimilarFilmsWithLimit } from '../../../store/data-process/selector';
+import { getIsAuthorized } from '../../../store/user-process/selector';
 import { AppRoute } from '../../../utils/const';
 import FilmDetailTabs from '../../film-detail-tabs/film-detail-tabs';
 import FilmList from '../../film-list/film-list';
 import Footer from '../../footer/footer';
 import Header from '../../header/header';
+import Loader from '../../loader/loader';
 
-type FilmPageProps = {
-  film: Film;
+type RouteParams = {
+  id: string;
 };
 
-function FilmPage({ film }: FilmPageProps): JSX.Element {
+function FilmPage(): JSX.Element {
+  const params = useParams<RouteParams>();
+  const film = useSelector(getFilmDetails);
+  const similarFilms = useSelector(getSimilarFilmsWithLimit);
+  const isAuthorized = useSelector(getIsAuthorized);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (film === undefined || film?.id.toString() !== params.id) {
+      dispatch(fetchFilmDetails(params.id));
+      dispatch(fetchSimilarFilms(params.id));
+    }
+  }, [dispatch, film, params.id]);
+
+  if (film === undefined || film.id.toString() !== params.id) {
+    return (
+      <div style={{minHeight: '100vh', display: 'flex'}}>
+        <Loader/>
+      </div>
+    );
+  }
+
   return (
     <>
       <section className="film-card film-card--full" style={{backgroundColor: film.backgroundColor}}>
@@ -54,9 +79,10 @@ function FilmPage({ film }: FilmPageProps): JSX.Element {
                   </svg>
                   <span>My list</span>
                 </button>
+                {isAuthorized &&
                 <Link to={`${AppRoute.Film}/${film.id}${AppRoute.AddReview}`} className="btn film-card__button">
                   Add review
-                </Link>
+                </Link>}
               </div>
             </div>
           </div>
@@ -79,11 +105,12 @@ function FilmPage({ film }: FilmPageProps): JSX.Element {
       </section>
 
       <div className="page-content">
-        <FilmList
-          filmList={fakeFilms.slice(0, 4)}
-          header={<h2 className="catalog__title">More like this</h2>}
-          className='catalog--like-this'
-        />
+        {similarFilms !== undefined &&
+          <FilmList
+            filmList={similarFilms}
+            header={<h2 className="catalog__title">More like this</h2>}
+            className='catalog--like-this'
+          />}
 
         <Footer/>
       </div>
