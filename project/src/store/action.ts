@@ -1,6 +1,7 @@
 import { createAction } from '@reduxjs/toolkit';
 import { Film } from '../types/film';
 import { ActionType } from '../types/store/action';
+import { CommentsForFilm } from '../types/store/data-process';
 import { AuthInfo } from '../types/user';
 import { AuthorizationStatus } from '../utils/const';
 
@@ -56,4 +57,9 @@ export const redirectToRoute = createAction(
 export const setSimilarFilms = createAction(
   ActionType.SetSimilarFilms,
   (films: Film[]) => ({payload: films}),
+);
+
+export const setFilmComments = createAction(
+  ActionType.SetFilmComments,
+  (comments: CommentsForFilm | undefined) => ({payload: comments}),
 );

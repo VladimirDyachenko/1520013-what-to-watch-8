@@ -1,13 +1,16 @@
 import axios from 'axios';
 import { dropToken, getToken, setToken } from '../services/token';
+import { Comment, CommentPost } from '../types/comment';
 import { Film } from '../types/film';
 import { ThunkActionResult } from '../types/store/action';
+import { CommentsForFilm } from '../types/store/data-process';
 import { AuthInfo } from '../types/user';
 import { ApiRoute, AppRoute, AuthorizationStatus, HttpCode } from '../utils/const';
 import { keysToCamel } from '../utils/snake-to-camel-adapter';
 import {
   redirectToRoute,
   setAuthorizationStatus,
+  setFilmComments,
   setFilmData,
   setFilmDetails,
   setIsDataLoaded,
@@ -107,6 +110,34 @@ export const fetchSimilarFilms = (id: string): ThunkActionResult =>
       const adaptedData = keysToCamel(data) as Film[];
       dispatch(setSimilarFilms(adaptedData));
     } catch (error: unknown) {
+      // eslint-disable-next-line no-console
+      console.error(error);
+    }
+  };
+
+export const addReviewAction = (id: string, review: CommentPost, onSuccess: () => void, onError: () => void): ThunkActionResult =>
+  async (dispatch, _getState, api): Promise<void> => {
+    try {
+      const { data } = await api.post(`${ApiRoute.Comments}/${id}`, review);
+      const adaptedData = keysToCamel(data) as Comment[];
+      const comments: CommentsForFilm = { filmId: Number(id), comments: adaptedData };
+      dispatch(setFilmComments(comments));
+      onSuccess();
+    } catch (error: unknown) {
+      onError();
+      // eslint-disable-next-line no-console
+      console.error(error);
+    }
+  };
+
+export const fetchFilmComments = (id: string): ThunkActionResult =>
+  async (dispatch, _getState, api): Promise<void> => {
+    try {
+      const { data } = await api.get(`${ApiRoute.Comments}/${id}`);
+      const adaptedData = keysToCamel(data) as Comment[];
+      const comments: CommentsForFilm = { filmId: Number(id), comments: adaptedData };
+      dispatch(setFilmComments(comments));
+    } catch (error) {
       // eslint-disable-next-line no-console
       console.error(error);
     }

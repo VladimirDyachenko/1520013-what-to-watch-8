@@ -1,5 +1,6 @@
 import { createSelector } from 'reselect';
 import { Film } from '../../types/film';
+import { CommentsForFilm } from '../../types/store/data-process';
 import { Store } from '../../types/store/store';
 import { NameSpace } from '../root-reducer';
 
@@ -53,3 +54,5 @@ export const getSimilarFilmsWithLimit = createSelector(
     return films.slice(0, limit);
   },
 );
+
+export const getFilmComments = (state: Store): CommentsForFilm | undefined => state[NameSpace.Data].comments;

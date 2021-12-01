@@ -1,6 +1,6 @@
 import { createReducer } from '@reduxjs/toolkit';
 import { DataProcess } from '../../types/store/data-process';
-import { setFavoriteFilms, setFilmData, setFilmDetails, setIsDataLoaded, setPromotedFilm, setSelectedGenre, setSimilarFilms } from '../action';
+import { setFavoriteFilms, setFilmComments, setFilmData, setFilmDetails, setIsDataLoaded, setPromotedFilm, setSelectedGenre, setSimilarFilms } from '../action';
 
 const initialState: DataProcess = {
   films: [],
@@ -10,6 +10,7 @@ const initialState: DataProcess = {
   promotedFilm: undefined,
   filmDetails: undefined,
   similarFilms: undefined,
+  comments: undefined,
 };
 
 const dataProcess = createReducer(initialState, (builder) => {
@@ -34,6 +35,9 @@ const dataProcess = createReducer(initialState, (builder) => {
     })
     .addCase(setSimilarFilms, (state, action) => {
       state.similarFilms = action.payload;
+    })
+    .addCase(setFilmComments, (state, action) => {
+      state.comments = action.payload;
     });
 });
 
