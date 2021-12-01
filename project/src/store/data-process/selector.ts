@@ -1,4 +1,5 @@
 import { createSelector } from 'reselect';
+import { SplittedComments } from '../../types/comment';
 import { Film } from '../../types/film';
 import { CommentsForFilm } from '../../types/store/data-process';
 import { Store } from '../../types/store/store';
@@ -56,3 +57,20 @@ export const getSimilarFilmsWithLimit = createSelector(
 );
 
 export const getFilmComments = (state: Store): CommentsForFilm | undefined => state[NameSpace.Data].comments;
+
+export const getFilmCommentsSplitted = createSelector(
+  getFilmComments,
+  (commentForFilm) => {
+    if (commentForFilm === undefined) {
+      return undefined;
+    }
+    const result: SplittedComments = {
+      filmId: commentForFilm.filmId,
+      left: [],
+      right: [],
+    };
+    commentForFilm.comments.forEach((comment, index) => index % 2 === 0 ? result.left.push(comment) : result.right.push(comment));
+
+    return result;
+  },
+);

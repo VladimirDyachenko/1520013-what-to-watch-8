@@ -34,3 +34,5 @@ export const runtimeToString = (runtime: number): string => {
 
   return runtimeString;
 };
+
+export const formatDateToComment = (date: string): string => new Date(date).toLocaleString('en-Us', {month: 'long', year: 'numeric'});

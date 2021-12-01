@@ -13,3 +13,9 @@ export type CommentPost = {
   rating: number;
   comment: string;
 };
+
+export type SplittedComments = {
+  filmId: number;
+  left: Comment[];
+  right: Comment[];
+}
