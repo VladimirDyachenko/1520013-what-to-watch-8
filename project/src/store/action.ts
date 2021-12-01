@@ -13,7 +13,7 @@ export const setAuthorizationStatus = createAction(
 
 export const setUserData = createAction(
   ActionType.SetUserData,
-  (userData: AuthInfo) => ({
+  (userData: AuthInfo | undefined) => ({
     payload: userData,
   }),
 );
