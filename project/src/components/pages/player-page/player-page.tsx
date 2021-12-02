@@ -18,10 +18,10 @@ function PlayerPage(): JSX.Element {
   const film = useSelector(getFilmDetails);
 
   useEffect(() => {
-    if (film === undefined) {
+    if (film === undefined || params.id !== film.id.toString()) {
       dispatch(fetchFilmDetails(params.id));
     }
-  });
+  }, [dispatch, film, params.id]);
 
   useEffect(() => {
     dispatch(fetchFilmDetails(params.id));
