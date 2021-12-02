@@ -2,7 +2,7 @@ import { useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useParams } from 'react-router-dom';
 import { redirectToRoute } from '../../../store/action';
-import { fetchFilmDetails, fetchSimilarFilms } from '../../../store/api-action';
+import { fetchFilmDetails, fetchSimilarFilms, toggleFavoriteAction } from '../../../store/api-action';
 import { getFilmDetails, getSimilarFilmsWithLimit } from '../../../store/data-process/selector';
 import { getIsAuthorized } from '../../../store/user-process/selector';
 import { AppRoute } from '../../../utils/const';
@@ -33,6 +33,12 @@ function FilmPage(): JSX.Element {
   const handlePlayClick = useCallback(() => {
     if (film !== undefined) {
       dispatch(redirectToRoute(`${AppRoute.Player}/${film.id}`));
+    }
+  }, [dispatch, film]);
+
+  const handleMyListClick = useCallback(() => {
+    if (film !== undefined) {
+      dispatch(toggleFavoriteAction(film.id, film.isFavorite));
     }
   }, [dispatch, film]);
 
@@ -81,10 +87,16 @@ function FilmPage(): JSX.Element {
                 <button
                   className="btn btn--list film-card__button"
                   type="button"
+                  onClick={handleMyListClick}
                 >
-                  <svg viewBox="0 0 19 20" width="19" height="20">
-                    <use xlinkHref="#add"></use>
-                  </svg>
+                  {film.isFavorite ?
+                    <svg viewBox="0 0 18 14" width="18" height="14">
+                      <use xlinkHref="#in-list"></use>
+                    </svg>
+                    :
+                    <svg viewBox="0 0 19 20" width="19" height="20">
+                      <use xlinkHref="#add"></use>
+                    </svg>}
                   <span>My list</span>
                 </button>
                 {isAuthorized &&

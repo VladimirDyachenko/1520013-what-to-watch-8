@@ -2,6 +2,7 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import { redirectToRoute, setSelectedGenre } from '../../../store/action';
+import { toggleFavoriteAction } from '../../../store/api-action';
 import { getAvailableGenres, getFilmsBySelectedGenre, getPromotedFilm, getSelectedGenre } from '../../../store/data-process/selector';
 import { AppRoute } from '../../../utils/const';
 import FilmList from '../../film-list/film-list';
@@ -30,6 +31,13 @@ function MainPage(): JSX.Element {
   useEffect(() => cardsToShowCount >= filmList.length ? setCanLoadMore(false) : setCanLoadMore(true), [filmList, cardsToShowCount]);
 
   const handleShowMoreClick = useCallback(() => setCardsToShowCount((count) => count + 4), [setCardsToShowCount]);
+
+  const handleMyListClick = useCallback(() => {
+    if (promotedFilm !== undefined) {
+      dispatch(toggleFavoriteAction(promotedFilm.id, promotedFilm.isFavorite));
+    }
+  }, [dispatch, promotedFilm]);
+
 
   const handlePlayClick = useCallback((id: number | undefined) => {
     if (id) {
@@ -68,10 +76,19 @@ function MainPage(): JSX.Element {
                   </svg>
                   <span>Play</span>
                 </button>
-                <button className="btn btn--list film-card__button" type="button">
-                  <svg viewBox="0 0 19 20" width="19" height="20">
-                    <use xlinkHref="#add"></use>
-                  </svg>
+                <button
+                  className="btn btn--list film-card__button"
+                  type="button"
+                  onClick={handleMyListClick}
+                >
+                  {promotedFilm?.isFavorite ?
+                    <svg viewBox="0 0 18 14" width="18" height="14">
+                      <use xlinkHref="#in-list"></use>
+                    </svg>
+                    :
+                    <svg viewBox="0 0 19 20" width="19" height="20">
+                      <use xlinkHref="#add"></use>
+                    </svg>}
                   <span>My list</span>
                 </button>
               </div>
