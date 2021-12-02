@@ -10,6 +10,7 @@ import { keysToCamel } from '../utils/snake-to-camel-adapter';
 import {
   redirectToRoute,
   setAuthorizationStatus,
+  setFavoriteFilms,
   setFilmComments,
   setFilmData,
   setFilmDetails,
@@ -140,5 +141,20 @@ export const fetchFilmComments = (id: string): ThunkActionResult =>
     } catch (error) {
       // eslint-disable-next-line no-console
       console.error(error);
+    }
+  };
+
+export const fetchFavoriteFilms = (): ThunkActionResult =>
+  async (dispatch, _getState, api): Promise<void> => {
+    try {
+      const { data } = await api.get(`${ApiRoute.Favorite}`);
+      const adaptedData = keysToCamel(data) as Film[];
+      dispatch(setFavoriteFilms(adaptedData));
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        if (error.response?.status === HttpCode.Unauthorized) {
+          dispatch(redirectToRoute(AppRoute.SignIn));
+        }
+      }
     }
   };
