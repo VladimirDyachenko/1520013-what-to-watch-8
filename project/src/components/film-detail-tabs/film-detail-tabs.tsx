@@ -1,5 +1,4 @@
-import { useEffect } from 'react';
-import { NavLink, useHistory, useLocation } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
 import { Film } from '../../types/film';
 import FilmDetails from '../film-details/film-details';
 import FilmOverview from '../film-overview/film-overview';
@@ -13,14 +12,6 @@ function FilmDetailTabs(props: FilmDetailTabsProps): JSX.Element {
   const { film } = props;
   const currentLocation = useLocation();
 
-  const history = useHistory();
-
-  useEffect(() => {
-    if (history.location.hash === '') {
-      history.push('#overview');
-    }
-  });
-
   return (
     <div className="film-card__desc">
       <nav className="film-nav film-card__nav">
@@ -30,7 +21,7 @@ function FilmDetailTabs(props: FilmDetailTabsProps): JSX.Element {
               to={{hash: 'overview'}}
               className="film-nav__link"
               activeClassName={'film-nav__link--active'}
-              isActive={(_, location) => location.hash === '#overview'}
+              isActive={(_, location) => location.hash === '#overview' || location.hash === ''}
             >
               Overview
             </NavLink>
@@ -58,8 +49,7 @@ function FilmDetailTabs(props: FilmDetailTabsProps): JSX.Element {
         </ul>
       </nav>
 
-      {currentLocation.hash === '' && <FilmOverview film={film}/>}
-      {currentLocation.hash === '#overview' && <FilmOverview film={film}/>}
+      {(currentLocation.hash === ''|| currentLocation.hash === '#overview') && <FilmOverview film={film}/>}
       {currentLocation.hash === '#details' && <FilmDetails film={film}/>}
       {currentLocation.hash === '#reviews' && <FilmReviews/>}
     </div>
