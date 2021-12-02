@@ -63,3 +63,8 @@ export const setFilmComments = createAction(
   ActionType.SetFilmComments,
   (comments: CommentsForFilm | undefined) => ({payload: comments}),
 );
+
+export const updateFilm = createAction(
+  ActionType.UpdateFilm,
+  (film: Film) => ({payload: film}),
+);

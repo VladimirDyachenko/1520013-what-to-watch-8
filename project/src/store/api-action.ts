@@ -17,7 +17,8 @@ import {
   setIsDataLoaded,
   setPromotedFilm,
   setSimilarFilms,
-  setUserData
+  setUserData,
+  updateFilm
 } from './action';
 
 export const fetchFilms = (): ThunkActionResult =>
@@ -150,6 +151,22 @@ export const fetchFavoriteFilms = (): ThunkActionResult =>
       const { data } = await api.get(`${ApiRoute.Favorite}`);
       const adaptedData = keysToCamel(data) as Film[];
       dispatch(setFavoriteFilms(adaptedData));
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        if (error.response?.status === HttpCode.Unauthorized) {
+          dispatch(redirectToRoute(AppRoute.SignIn));
+        }
+      }
+    }
+  };
+
+export const toggleFavoriteAction = (filmId: number, isFavorite: boolean): ThunkActionResult =>
+  async (dispatch, _getState, api): Promise<void> => {
+    try {
+      const newFavoriteStatus = isFavorite ? 0 : 1;
+      const { data } = await api.post(`${ApiRoute.Favorite}/${filmId}/${newFavoriteStatus}`);
+      const adaptedData = keysToCamel(data) as Film;
+      dispatch(updateFilm(adaptedData));
     } catch (error) {
       if (axios.isAxiosError(error)) {
         if (error.response?.status === HttpCode.Unauthorized) {

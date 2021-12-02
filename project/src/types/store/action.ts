@@ -14,6 +14,7 @@ export enum ActionType {
   SetFilmDetails = 'data/SetFilmDetails',
   SetSimilarFilms = 'data/SetSimilarFilms',
   SetFilmComments = 'data/SetFilmComments',
+  UpdateFilm = 'data/UpdateFilm',
   RedirectToRoute = 'navigation/RedirectToRoute',
 }
 
