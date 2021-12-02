@@ -1,6 +1,7 @@
-import { useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useParams } from 'react-router-dom';
+import { redirectToRoute } from '../../../store/action';
 import { fetchFilmDetails, fetchSimilarFilms } from '../../../store/api-action';
 import { getFilmDetails, getSimilarFilmsWithLimit } from '../../../store/data-process/selector';
 import { getIsAuthorized } from '../../../store/user-process/selector';
@@ -28,6 +29,12 @@ function FilmPage(): JSX.Element {
       dispatch(fetchSimilarFilms(params.id));
     }
   }, [dispatch, film, params.id]);
+
+  const handlePlayClick = useCallback(() => {
+    if (film !== undefined) {
+      dispatch(redirectToRoute(`${AppRoute.Player}/${film.id}`));
+    }
+  }, [dispatch, film]);
 
   if (film === undefined || film.id.toString() !== params.id) {
     return (
@@ -64,6 +71,7 @@ function FilmPage(): JSX.Element {
                 <button
                   className="btn btn--play film-card__button"
                   type="button"
+                  onClick={handlePlayClick}
                 >
                   <svg viewBox="0 0 19 19" width="19" height="19">
                     <use xlinkHref="#play-s"></use>

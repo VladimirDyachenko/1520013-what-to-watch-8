@@ -1,8 +1,9 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
-import { setSelectedGenre } from '../../../store/action';
+import { redirectToRoute, setSelectedGenre } from '../../../store/action';
 import { getAvailableGenres, getFilmsBySelectedGenre, getPromotedFilm, getSelectedGenre } from '../../../store/data-process/selector';
+import { AppRoute } from '../../../utils/const';
 import FilmList from '../../film-list/film-list';
 import Footer from '../../footer/footer';
 import GenreFilter from '../../genre-filter/genre-filter';
@@ -30,6 +31,12 @@ function MainPage(): JSX.Element {
 
   const handleShowMoreClick = useCallback(() => setCardsToShowCount((count) => count + 4), [setCardsToShowCount]);
 
+  const handlePlayClick = useCallback((id: number | undefined) => {
+    if (id) {
+      dispatch(redirectToRoute(`${AppRoute.Player}/${id}`));
+    }
+  }, [dispatch]);
+
   return (
     <>
       <section className="film-card">
@@ -55,7 +62,7 @@ function MainPage(): JSX.Element {
               </p>
 
               <div className="film-card__buttons">
-                <button className="btn btn--play film-card__button" type="button">
+                <button className="btn btn--play film-card__button" type="button" onClick={() => handlePlayClick(promotedFilm?.id)}>
                   <svg viewBox="0 0 19 19" width="19" height="19">
                     <use xlinkHref="#play-s"></use>
                   </svg>
