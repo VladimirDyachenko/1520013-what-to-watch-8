@@ -1107,7 +1107,7 @@ main {
   height: 100%;
   -o-object-fit: cover;
   font-family: "object-fit:cover";
-  object-fit: cover;
+  object-fit: contain;
 }
 
 .player__exit {

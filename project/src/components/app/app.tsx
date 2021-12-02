@@ -9,13 +9,11 @@ import AddReviewPage from '../pages/add-review/add-review';
 import PlayerPage from '../pages/player-page/player-page';
 import PrivateRoute from '../route-components/private-route/private-route';
 import { useSelector } from 'react-redux';
-import { getFilmData, getIsDataLoaded } from '../../store/data-process/selector';
+import { getIsDataLoaded } from '../../store/data-process/selector';
 import Loader from '../loader/loader';
 
 
 function App(): JSX.Element {
-  const filmData = useSelector(getFilmData);
-  const randomFilm = filmData[Math.floor(Math.random() * filmData.length)];
   const isLoaded = useSelector(getIsDataLoaded);
 
   if (!isLoaded) {
@@ -35,7 +33,7 @@ function App(): JSX.Element {
         <FilmPage />
       </Route>
       <Route path={`${AppRoute.Player}/:id`} exact>
-        <PlayerPage film={randomFilm}/>
+        <PlayerPage />
       </Route>
       <Route path={AppRoute.SignIn} exact>
         <LoginPage />

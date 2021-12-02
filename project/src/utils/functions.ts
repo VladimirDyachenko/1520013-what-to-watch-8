@@ -35,4 +35,21 @@ export const runtimeToString = (runtime: number): string => {
   return runtimeString;
 };
 
+export const getPlayerTimeLeft = (duration: number, passed: number): string => {
+  const deltaTime = duration - passed;
+  const hours = Math.floor(deltaTime / 3600);
+  const minutes = Math.floor(deltaTime % 3600 / 60);
+  const seconds = Math.floor(deltaTime - (hours * 3600 + minutes * 60));
+
+  let timeLeft = '-';
+
+  if (hours !== 0) {
+    timeLeft += `${hours.toString().padStart(2, '0')}:`;
+  }
+
+  timeLeft += ` ${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+
+  return timeLeft;
+};
+
 export const formatDateToComment = (date: string): string => new Date(date).toLocaleString('en-Us', {month: 'long', year: 'numeric'});
