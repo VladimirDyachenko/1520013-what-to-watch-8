@@ -14,7 +14,7 @@ export enum AuthorizationStatus {
   NotAuthorized = 'NO_AUTH',
 }
 
-export const BACKEND_URL = 'https://8.react.pages.academy/wtw';
+export const BACKEND_URL = 'https://9.react.pages.academy/wtw';
 
 export const REQUEST_TIMEOUT = 5000;
 
@@ -32,3 +32,5 @@ export enum ApiRoute {
   Login = '/login',
   Logout = '/logout',
 }
+
+export const CARDS_PER_PAGE = 9;
